@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:project_bookeeda/features/CartPage/cart_page.dart';
+import 'package:project_bookeeda/features/ProductPage/product_page.dart';
 import 'package:project_bookeeda/Onboarding/screen1.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-
-import 'Onboarding/screen2.dart';
+import 'package:project_bookeeda/Onboarding/screen2.dart';
+import 'package:project_bookeeda/features/LandingPage/landing_page.dart';
+import 'package:project_bookeeda/features/PurchasePage/purchase_page.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart'; // Import the LandingPage
 
 void main() {
   runApp(const MyApp());
@@ -11,7 +14,6 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -21,72 +23,89 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.black),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => LandingPage(),
+        '/product': (context) => ProductPage(),
+        '/cart': (context) => CartPage(),
+        '/purchase': (context) => PurchasePage(),
+      },
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-  final String title;
+class MyMainPage extends StatefulWidget {
+  const MyMainPage({super.key});
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<MyMainPage> createState() => _MyMainPageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyMainPageState extends State<MyMainPage> {
   PageController pageController = PageController();
-  String buttonText = "Skip";
+  String buttonText = "Next";
   int currentPageIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        body: Stack(
-          children: [
-            PageView(
-              controller: pageController,
-              onPageChanged: (index) {
-                currentPageIndex = index;
-                if (index == 1) {
-                  buttonText = "Finish";
-                } else {
-                  buttonText = "Next";
-                }
-                setState(() {});
-              },
+      backgroundColor: Colors.white,
+      body: Stack(
+        children: [
+          PageView(
+            controller: pageController,
+            onPageChanged: (index) {
+              currentPageIndex = index;
+              if (index == 1) {
+                buttonText = "Finish";
+              } else {
+                buttonText = "Next";
+              }
+              setState(() {});
+            },
+            children: [
+              Screen1(),
+              Screen2(),
+            ],
+          ),
+          Container(
+            alignment: const Alignment(0, 0.9),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Screen1(),
-                Screen2(),
-              ],
-            ),
-            Container(
-              alignment: const Alignment(0, 0.9),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  const SizedBox(),
-                  GestureDetector(
-                    onTap: () {
+                const SizedBox(),
+                GestureDetector(
+                  onTap: () {
+                    if (currentPageIndex == 1) {
+                      // Navigate to LandingPage
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => LandingPage()),
+                      );
+                    } else {
                       pageController.nextPage(
                           duration: Duration(milliseconds: 500),
                           curve: Curves.easeIn);
-                    },
-                    child: Text("$buttonText"),
-                  ),
-                  SmoothPageIndicator(controller: pageController, count: 2),
-                  currentPageIndex == 1
-                      ? SizedBox(
-                          width: 80,
-                        )
-                      : GestureDetector(
-                          onTap: () {},
-                          child: Text("Next"),
-                        ),
-                ],
-              ),
-            )
-          ],
-        ));
+                    }
+                  },
+                  child: Text("$buttonText"),
+                ),
+                SmoothPageIndicator(controller: pageController, count: 2),
+                currentPageIndex == 1
+                    ? SizedBox(width: 80)
+                    : GestureDetector(
+                        onTap: () {
+                          pageController.nextPage(
+                              duration: Duration(milliseconds: 500),
+                              curve: Curves.easeIn);
+                        },
+                        child: Text("Next"),
+                      ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
