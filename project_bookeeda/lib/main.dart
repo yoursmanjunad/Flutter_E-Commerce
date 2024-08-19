@@ -33,8 +33,7 @@ class HomePage extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 image: DecorationImage(
-                  image: AssetImage(
-                      'assets/book_images/thehookupequation.jpg'),
+                  image: AssetImage('assets/book_images/thehookupequation.jpg'),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -57,8 +56,9 @@ class HomePage extends StatelessWidget {
                   CategoryItem(title: "New Releases"),
                   CategoryItem(title: "Best Selling"),
                   CategoryItem(title: "Most Rated"),
-                  CategoryItem(title: ""),
-                  CategoryItem(title: "")
+                  CategoryItem(title: "Sci-Fi"),
+                  CategoryItem(title: "Romance"),
+                  CategoryItem(title: "Biography"),
                 ],
               ),
             ),
@@ -106,13 +106,13 @@ class CategoryItem extends StatelessWidget {
       margin: EdgeInsets.all(5),
       padding: EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: Colors.redAccent,
-        borderRadius: BorderRadius.circular(10),
-      ),
+          color: Color.fromARGB(255, 255, 255, 255),
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(width: 2.0, color: Color.fromARGB(255, 0, 0, 0))),
       child: Center(
         child: Text(
           title,
-          style: TextStyle(color: Colors.white, fontSize: 16),
+          style: TextStyle(color: Colors.black, fontSize: 16),
         ),
       ),
     );
@@ -129,7 +129,7 @@ class ProductItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(7),
         border: Border.all(color: Colors.grey),
       ),
       child: Column(
