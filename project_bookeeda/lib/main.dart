@@ -20,7 +20,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Bookeeda"),
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.red,
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -29,12 +29,12 @@ class HomePage extends StatelessWidget {
             // Top Banner
             Container(
               margin: EdgeInsets.all(10),
-              height: 150,
+              height: 700,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 image: DecorationImage(
                   image: AssetImage(
-                      'assets/images/banner.jpg'), // Replace with your image
+                      'assets/book_images/thehookupequation.jpg'),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -48,16 +48,17 @@ class HomePage extends StatelessWidget {
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
             ),
-            SizedBox(height: 10),
+            SizedBox(height: 5),
             Container(
-              height: 100,
+              height: 70,
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: [
-                  CategoryItem(title: "Electronics"),
-                  CategoryItem(title: "Clothing"),
-                  CategoryItem(title: "Books"),
-                  CategoryItem(title: "Home & Kitchen"),
+                  CategoryItem(title: "New Releases"),
+                  CategoryItem(title: "Best Selling"),
+                  CategoryItem(title: "Most Rated"),
+                  CategoryItem(title: ""),
+                  CategoryItem(title: "")
                 ],
               ),
             ),
@@ -105,7 +106,7 @@ class CategoryItem extends StatelessWidget {
       margin: EdgeInsets.all(5),
       padding: EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: Colors.blueAccent,
+        color: Colors.redAccent,
         borderRadius: BorderRadius.circular(10),
       ),
       child: Center(
