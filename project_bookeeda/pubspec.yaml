@@ -14,6 +14,7 @@ dependencies:
   flutter_native_splash: ^2.3.2
   cupertino_icons: ^1.0.6
   smooth_page_indicator: ^1.0.0 # Specify a version for smooth_page_indicator
+  carousel_slider: ^4.0.0
 
 dev_dependencies:
   flutter_test:
