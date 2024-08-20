@@ -8,9 +8,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       title: "Bookeeda",
-      home: Homeview(),
+      theme: ThemeData(
+        primarySwatch: Colors.pink,
+      ),
+      home: const Homeview(),
     );
   }
 }

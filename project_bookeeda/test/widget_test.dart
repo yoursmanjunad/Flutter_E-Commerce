@@ -10,6 +10,7 @@ void main() {
       await tester.pumpWidget(const MyApp());
       expect(find.byType(Container), findsOneWidget);
       expect(find.text("Hello Readers!"), findsOneWidget);
+      expect(find.byType(Center), findsOneWidget);
     },
   );
 }
