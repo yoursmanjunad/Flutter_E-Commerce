@@ -15,6 +15,9 @@ dependencies:
   cupertino_icons: ^1.0.6
   smooth_page_indicator: ^1.0.0 # Specify a version for smooth_page_indicator
   carousel_slider: ^4.0.0
+  cached_network_image: ^3.3.1
+  google_fonts: ^6.1.0
+  motion_tab_bar: ^2.0.4
 
 dev_dependencies:
   flutter_test:

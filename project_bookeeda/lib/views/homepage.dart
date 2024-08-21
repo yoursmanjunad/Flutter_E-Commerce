@@ -10,6 +10,11 @@ class Carousel extends StatelessWidget {
         appBar: AppBar(
           title: Text("Bookeeda"),
         ),
+        body: ListView(
+          children: [
+            CarouselSlider
+          ],
+        ),
       ),
     );
   }
