@@ -1,108 +1,95 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:oktoast/oktoast.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-void main() {
-  runApp(MyApp());
+import 'core/constant/strings.dart';
+import 'core/router/app_router.dart';
+import 'core/theme/app_theme.dart';
+import 'domain/usecases/product/get_product_usecase.dart';
+import 'presentation/blocs/cart/cart_bloc.dart';
+import 'presentation/blocs/category/category_bloc.dart';
+import 'presentation/blocs/delivery_info/delivery_info_action/delivery_info_action_cubit.dart';
+import 'presentation/blocs/delivery_info/delivery_info_fetch/delivery_info_fetch_cubit.dart';
+import 'presentation/blocs/filter/filter_cubit.dart';
+
+import 'core/services/services_locator.dart' as di;
+import 'presentation/blocs/home/navbar_cubit.dart';
+import 'presentation/blocs/order/order_fetch/order_fetch_cubit.dart';
+import 'presentation/blocs/product/product_bloc.dart';
+import 'presentation/blocs/user/user_bloc.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await di.init();
+
+  runApp(const MyApp());
+  configLoading();
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        useMaterial3: true,
-        textTheme: GoogleFonts.aboretoTextTheme(),
-      ),
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text("Bookeeda"),
-          titleTextStyle: TextStyle(color: Colors.pinkAccent),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => NavbarCubit(),
         ),
-        drawer: Drawer(
-          child: ListView(
-            children: [
-              const DrawerHeader(
-                decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 36, 34, 34),
-                ),
-                child: Text("Drawer Header"),
-              ),
-              ListTile(
-                title: const Text("Purchases"),
-                onTap: () {},
-              ),
-              ListTile(
-                title: const Text("Following"),
-                onTap: () {},
-              ),
-              ListTile(
-                title: const Text(""),
-                onTap: () {},
-              )
-            ],
-          ),
+        BlocProvider(
+          create: (context) => FilterCubit(),
         ),
-        body: Column(
-          children: [
-            // Carousel directly below the AppBar
-            CarouselSlider(
-              options: CarouselOptions(
-                height: 600.0, // Set the desired height for the carousel
-                autoPlay: true,
-                enlargeCenterPage: true,
-                aspectRatio: 16 / 9,
-                autoPlayCurve: Curves.fastOutSlowIn,
-                enableInfiniteScroll: true,
-                autoPlayAnimationDuration: Duration(milliseconds: 800),
-                viewportFraction: 0.8,
-              ),
-              items: [
-                Container(
-                  margin: EdgeInsets.all(5.0),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10.0),
-                    image: DecorationImage(
-                      image: AssetImage(
-                          "assets/book_images/breaktherules.jpg"),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.all(5.0),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10.0),
-                    image: DecorationImage(
-                      image: AssetImage(
-                          "assets/book_images/thehookupequation.jpg"),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.all(5.0),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10.0),
-                    image: DecorationImage(
-                      image:
-                          AssetImage("assets/book_images/bestfakefiance.jpg"),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            // Other widgets below the carousel
-            Expanded(
-              child: Center(
-                child: Text("Content below the carousel"),
-              ),
-            ),
-          ],
+        BlocProvider(
+          create: (context) => di.sl<ProductBloc>()
+            ..add(const GetProducts(FilterProductParams())),
+        ),
+        BlocProvider(
+          create: (context) =>
+              di.sl<CategoryBloc>()..add(const GetCategories()),
+        ),
+        BlocProvider(
+          create: (context) => di.sl<CartBloc>()..add(const GetCart()),
+        ),
+        BlocProvider(
+          create: (context) => di.sl<UserBloc>()..add(CheckUser()),
+        ),
+        BlocProvider(
+          create: (context) => di.sl<DeliveryInfoActionCubit>(),
+        ),
+        BlocProvider(
+          create: (context) => di.sl<DeliveryInfoFetchCubit>()..fetchDeliveryInfo(),
+        ),
+        BlocProvider(
+          create: (context) => di.sl<OrderFetchCubit>()..getOrders(),
+        ),
+      ],
+      child: OKToast(
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          initialRoute: AppRouter.home,
+          onGenerateRoute: AppRouter.onGenerateRoute,
+          title: appTitle,
+          theme: AppTheme.lightTheme,
+          builder: EasyLoading.init(),
         ),
       ),
     );
   }
+}
+
+void configLoading() {
+  EasyLoading.instance
+    ..displayDuration = const Duration(milliseconds: 2500)
+    ..indicatorType = EasyLoadingIndicatorType.fadingCircle
+    ..loadingStyle = EasyLoadingStyle.custom
+    ..indicatorSize = 45.0
+    ..radius = 10.0
+    ..progressColor = Colors.white
+    ..backgroundColor = Colors.black
+    ..indicatorColor = Colors.white
+    ..textColor = Colors.white
+    ..userInteractions = false
+    ..maskType = EasyLoadingMaskType.black
+    ..dismissOnTap = true;
 }
