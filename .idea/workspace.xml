@@ -5,10 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fd5cf091-66be-4ba0-a043-02e79e03dd53" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/Project.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Project.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project_bookeeda/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/project_bookeeda/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project_bookeeda/lib/views/homepage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/project_bookeeda/lib/views/homepage.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project_bookeeda/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/project_bookeeda/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project_bookeeda/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/project_bookeeda/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,7 +101,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="Dart">
           <url>file://$PROJECT_DIR$/project_bookeeda/lib/main.dart</url>
-          <line>1</line>
+          <line>51</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>
